@@ -48,6 +48,7 @@
              <component :is="item.meta.icon"></component>
         </el-icon>
              <span>{{item.meta.name}}</span> 
+            
     </el-menu-item> 
 
     <!-- 有子菜單 -->
