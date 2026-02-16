@@ -70,4 +70,7 @@ export const companionList = (params) => {
 export const deleteCompanion = (data) => {
      return request.post('/delete/companion', data)
 }
-
+//訂單列表(GET)
+export const adminOrder = (params) => {
+     return request.get('/admin/order', { params })
+}

@@ -39,7 +39,7 @@
     <template v-for="(item, idx) in props.menuData" :key="item.name || idx">
     <!-- 沒有子菜單 -->
     <el-menu-item   
-        @click="handleClick(item)"
+        @click="handleClick(item, getIndex(item))"
         v-if="!item.children || item.children.length ==0"   
         :index="getIndex(item)"
         :key="getIndex(item)">
