@@ -53,7 +53,7 @@
                     :icon="InfoFilled"
                     icon-color="#626AEF"
                     title="是否確認完成"
-                    @confirm="confirmEvent"
+                    @confirm="confirmEvent(scope.row.out_trade_no)"
                 > 
                     <template #reference>
                         <el-button type="primary" link>服務完成</el-button>  
@@ -81,7 +81,7 @@
 import { InfoFilled, User } from '@element-plus/icons-vue';
 import { useRoute } from 'vue-router'
 import { reactive, onMounted } from 'vue'   
-import { adminOrder } from '@/api/index.js'
+import { adminOrder ,updateOrder} from '@/api/index.js'
 import dayjs from 'dayjs'
 
 const route = useRoute()
@@ -100,7 +100,14 @@ const paginationData = reactive({
 const searchForm = reactive({
     out_trade_no:'',
 })
-const onSubmit = () => {
+const onSubmit = (params) => {
+    adminOrder({...paginationData, ...params}).then(({ data }) => {
+        const list = data.data?.list || []
+        const total = data.data?.total || 0
+
+        tableData.list = list
+        tableData.total = total
+    })
     getListData()
 }
 
@@ -145,8 +152,12 @@ const statusMap =(key)=> {
 }
 
 //泡泡彈窗提交
-const confirmEvent = () =>{
-
+const confirmEvent = (id) =>{
+    updateOrder({id}).then(({data})=>{
+        if(data.code === 10000){
+            getListData()
+        }
+    })
 }
 
 

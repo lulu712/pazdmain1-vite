@@ -74,3 +74,8 @@ export const deleteCompanion = (data) => {
 export const adminOrder = (params) => {
      return request.get('/admin/order', { params })
 }
+
+//服務狀態完成(POST)
+export const updateOrder = (data) => {
+     return request.post('/update/order', data)
+}
