@@ -47,7 +47,7 @@
         <el-icon size="20">
              <component :is="item.meta.icon"></component>
         </el-icon>
-             <span>{{item.meta.name}}</span> 
+             <span>{{zhCNtoTW(item.meta.name)}}</span> 
             
     </el-menu-item> 
 
@@ -58,7 +58,7 @@
                 <el-icon size="20">
                     <component :is="item.meta.icon"></component>
                 </el-icon>
-                <span>{{item.meta.name}}</span> 
+                <span>{{zhCNtoTW(item.meta.name)}}</span> 
              </template>     
         <tree-menu :index="getIndex(item)" 
         :menuData="item.children.filter(c=>c.meta && c.meta.name)" />       
@@ -75,6 +75,7 @@ export default {
 <script setup>
 import { useRouter } from 'vue-router';
 import { useStore} from 'vuex';
+import { zhCNtoTW } from '@/utils/zhCNtoTW'
 
 // defineProps()是Vue 3的方式，用來讓子元件接收父元件傳進來的資料。
 const props= defineProps(['menuData','index'])

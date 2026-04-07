@@ -10,7 +10,7 @@
                 class="tab flex-box">
                 <el-icon class="icon" size="12"><component :is="item.icon" /></el-icon>
                 <router-link class="test flex-box" :to="{path: item.path}">
-                    {{item.name}}
+                    {{zhCNtoTW(item.name)}}
                 </router-link> 
                 <el-icon size="12" class="close" @click="closetTab(item,index)"><Close/></el-icon>
             </li>
@@ -41,6 +41,8 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus'
+import { zhCNtoTW } from '@/utils/zhCNtoTW'
+
 
 //拿到store實例
 const store= useStore()

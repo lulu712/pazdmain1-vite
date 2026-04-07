@@ -6,7 +6,11 @@
   <el-table :data="tableData.list" style="width: 100%;">
     <el-table-column  prop="id" label="id"/>
     <el-table-column  prop="name" label="暱稱"/>
-    <el-table-column  prop="permissionName" label="菜單權限" width="500px"/>
+    <el-table-column  prop="permissionName" label="菜單權限" width="500px">
+      <template #default="scope">
+        {{ zhCNtoTW(scope.row.permissionName) }}
+      </template>
+    </el-table-column>
     <el-table-column  #default="scope">
          <el-button type="primary" @click="open(scope.row)">編輯</el-button>
     </el-table-column>
@@ -26,7 +30,7 @@
   <el-dialog
     v-model="dialogFormVisable"
     :before-close="beforeClose"
-    title="添加權限"
+    title="新增權限"
     width="500"
 
   >
@@ -66,6 +70,7 @@
 import { reactive, ref,onMounted, nextTick} from 'vue';
 import { userGetMenu,userSetMenu,menuList} from '@/api';
 import{ Plus }from '@element-plus/icons-vue';
+import { zhCNtoTW } from '@/utils/zhCNtoTW'
     
    
     onMounted(()=>{

@@ -137,19 +137,29 @@ onMounted(() => {
   padding: 20px;
   background-color: #f5f7fa;
 
+
   .header {
     margin-bottom: 20px;
     .title { font-size: 18px; font-weight: bold; color: #333; }
     .subtitle { font-size: 14px; color: #999; margin-top: 5px; }
   }
 
-  .user-card {
+  .user-card, .status-card {
     height: 165px;
+    :deep(.el-card__body) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .user-card {
     .user-info {
       display: flex;
       align-items: center;
       padding-bottom: 15px;
-      border-bottom: 1px solid #f0f0f0;
+
       .username { font-size: 20px; font-weight: 500; color: #333; margin-left: 15px; }
     }
     .login-details {
@@ -159,7 +169,6 @@ onMounted(() => {
   }
 
   .status-card {
-    height: 165px;
     .status-item {
       display: flex;
       align-items: center;
