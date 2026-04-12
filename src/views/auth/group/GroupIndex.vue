@@ -67,17 +67,19 @@
   </el-dialog>
 </template>
 <script setup>
-import { reactive, ref,onMounted, nextTick} from 'vue';
+import {reactive, ref,onMounted, nextTick} from 'vue';
 import { userGetMenu,userSetMenu,menuList} from '@/api';
 import{ Plus }from '@element-plus/icons-vue';
 import { zhCNtoTW } from '@/utils/zhCNtoTW'
-    
-   
+
+
+
+
     onMounted(()=>{
       //菜單數據
       userGetMenu().then(({data})=>{
         console.log(data)
-        permissionsData.value=data.data
+        permissionsData.value = formatTreeData(data.data)
       })
       getListData()
     })
@@ -125,6 +127,8 @@ import { zhCNtoTW } from '@/utils/zhCNtoTW'
       
       })
     }
+
+    
 
     const formRef=ref()
 
@@ -177,6 +181,15 @@ import { zhCNtoTW } from '@/utils/zhCNtoTW'
         }
       })
     }
+
+//將權限樹由簡中改成繁中
+const formatTreeData = (list) => {
+  return list.map(item => ({
+    ...item,
+    label: zhCNtoTW(item.label || item.name || ''),
+    children: item.children ? formatTreeData(item.children) : []
+  }))
+}
 
 </script>
 

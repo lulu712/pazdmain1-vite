@@ -12,8 +12,16 @@
     </div>
     <el-table :data="tableData.list">
         <el-table-column prop="out_trade_no" label="訂單編號" width="150"></el-table-column>
-        <el-table-column prop="hospital_name" label="就診醫院"></el-table-column>
-        <el-table-column prop="service_name" label="陪診服務"></el-table-column>
+        <el-table-column label="就診醫院">
+            <template #default="scope">
+                {{ zhCNtoTW(scope.row.hospital_name) }}
+            </template>
+        </el-table-column>
+        <el-table-column prop="service_name" label="陪診服務">
+            <template #default="scope">
+                {{ zhCNtoTW(scope.row.service_name) }}
+            </template>
+        </el-table-column>
         <el-table-column label="陪護師頭像" width="100">
             <template #default="scope">
                 <el-avatar :size="40" :src="scope.row.companion ? scope.row.companion.avatar : ''">
@@ -38,11 +46,15 @@
             <template #default="scope">
               <!-- 優先顯示 trade_state，若無則顯示 service_state -->
               <el-tag :type="statusMap(scope.row.trade_state || scope.row.service_state)">
-                  {{ scope.row.trade_state || scope.row.service_state }}
+                  {{  zhCNtoTW(scope.row.trade_state || scope.row.service_state) }}
               </el-tag>
             </template>
         </el-table-column>
-        <el-table-column prop="service_state" label="接單狀態" ></el-table-column>
+            <el-table-column label="接單狀態">
+            <template #default="scope">
+                {{ zhCNtoTW(scope.row.service_state) }}
+            </template>
+            </el-table-column>
         <el-table-column prop="tel" label="聯繫人手機號" width="120"></el-table-column>
         <el-table-column label="操作" width="100" fixed="right">
             <template #default="scope">
@@ -83,6 +95,7 @@ import { useRoute } from 'vue-router'
 import { reactive, onMounted } from 'vue'   
 import { adminOrder ,updateOrder} from '@/api/index.js'
 import dayjs from 'dayjs'
+import { zhCNtoTW } from '@/utils/zhCNtoTW'
 
 const route = useRoute()
 

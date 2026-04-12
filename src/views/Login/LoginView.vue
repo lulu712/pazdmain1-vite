@@ -1,47 +1,87 @@
 <template>
-  <div>
-    <el-row class="login-container" justify="center">
-      <el-card style="width: 480px;">
-        <template #header>
-            <div class="card-header">
-                <img src="/login-head.png" alt="">
+  <div class="login-page">
+    <div class="login-layout">
+      <div class="login-banner">
+        <div class="banner-content">
+          <div class="brand-block">
+            <div class="logo-box">
+              <img :src="logo" alt="logo" class="banner-logo" />
             </div>
-        </template>
-          <div class="jump-link">
-            <el-link type="primary" @click="handleChange">{{formType? '返回登錄' : '註冊帳號'}}</el-link>
+              <div class="brand-text">
+                <div class="system-subtitle">Admin Dashboard</div>
+            </div>
           </div>
-          <el-form 
-                  ref="loginFormRef"
-                  :model="loginForm" 
-                   label-width="0" 
-                   style="max-width: 600px"
-                   class="demo-ruleForm"
-                   :rules="rules"
-                   >
-             <el-form-item prop="userName">
-                <el-input v-model="loginForm.userName" placeholder="手機號" prefix-icon="UserFilled" ></el-input>
-             
-              </el-form-item>
-             <el-form-item prop="passWord">
-                <el-input v-model="loginForm.passWord" type="password" placeholder="密碼" prefix-icon="Lock"></el-input>
-              </el-form-item>
-             
-              <el-form-item v-if="formType" prop="validCode">
-                <el-input v-model="loginForm.validCode" placeholder="驗證碼" prefix-icon="Lock">
-                  <template #append>
-                    <span @click="countdownChange">{{countdown.validText}}</span>
-                  </template>
-                </el-input> 
-              </el-form-item>
+            <h1 class="system-title">陪診服務後台管理系統</h1>
+            <p class="system-desc">
+            提供訂單管理、服務資訊管理與權限控管，協助平台維持穩定營運。
+            </p>
+        </div>
+      </div>
+      <div class="login-panel">
+        <el-card class="login-card" shadow="never">
+          <div class="card-title">
+            <h2>{{ formType ? '註冊帳號' : '歡迎登入' }}</h2>
+            <p>{{ formType ? '建立新的管理帳號' : '請輸入帳號密碼登入系統' }}</p>
+          </div>
 
-              <el-form-item>
-                <el-button type="primary" :style="{width:'100%'}" @click="submitForm(loginFormRef)">
-                    {{formType ? '註冊帳號' : '登錄'}}
-                </el-button>
-              </el-form-item>
+          <div class="jump-link">
+            <el-link type="primary" @click="handleChange">
+              {{ formType ? '返回登入' : '註冊帳號' }}
+            </el-link>
+          </div>
+
+          <el-form
+            ref="loginFormRef"
+            :model="loginForm"
+            label-width="0"
+            class="demo-ruleForm"
+            :rules="rules"
+          >
+            <el-form-item prop="userName">
+              <el-input
+                v-model="loginForm.userName"
+                placeholder="請輸入手機號"
+                size="large"
+              />
+            </el-form-item>
+
+            <el-form-item prop="passWord">
+              <el-input
+                v-model="loginForm.passWord"
+                type="password"
+                placeholder="請輸入密碼"
+                show-password
+                size="large"
+              />
+            </el-form-item>
+
+            <el-form-item v-if="formType" prop="validCode">
+              <el-input
+                v-model="loginForm.validCode"
+                placeholder="請輸入驗證碼"
+                size="large"
+              >
+                <template #append>
+                  <span class="code-text" @click="countdownChange">
+                    {{ countdown.validText }}
+                  </span>
+                </template>
+              </el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button
+                type="primary"
+                class="submit-btn"
+                @click="submitForm(loginFormRef)"
+              >
+                {{ formType ? '註冊帳號' : '登入系統' }}
+              </el-button>
+            </el-form-item>
           </el-form>
-      </el-card>
-    </el-row>
+        </el-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -49,7 +89,7 @@
 import{ref,reactive} from 'vue'
 import { ElMessage } from 'element-plus'
 import {getCode,userAuthentication,login,menuPermissions } from'../../api'
-
+import logo from '@/assets/pz_logo.png'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -190,23 +230,176 @@ const submitForm = async (formEl) => {
 </script>
 
 <style lang="less" scoped>
-  :deep(.el-card__header){
-    padding: 0;
+.login-page {
+  min-height: 100vh;
+  background: #eef3f8;
+}
+
+.login-layout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.login-banner {
+  width: 42%;
+  min-width: 420px;
+  background: linear-gradient(160deg, #1d4f91 0%, #163d70 100%);
+  display: flex;
+  align-items: center;
+  padding: 48px;
+  color: #fff;
+  justify-content: flex-start;
+  padding-left: 80px;
+
+}
+
+.banner-content {
+  max-width: 420px;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.logo-box {
+  width: 96px;
+  height: 96px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transform: translateY(-4px);
+
+}
+
+.banner-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.system-subtitle {
+  font-size: 24px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.5px;
+}
+
+.system-title {
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 800;
+  margin: 0 0 20px;
+  color: #ffffff;
+}
+
+.system-desc {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  max-width: 480px;
+}
+
+.login-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(31, 45, 61, 0.08);
+}
+
+:deep(.el-card__body) {
+  padding: 32px;
+}
+
+.card-title {
+  margin-bottom: 20px;
+}
+
+.card-title h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: #1f2d3d;
+}
+
+.card-title p {
+  margin: 0;
+  font-size: 14px;
+  color: #7a8899;
+}
+
+.jump-link {
+  text-align: right;
+  margin-bottom: 18px;
+}
+
+:deep(.el-input__wrapper) {
+  min-height: 46px;
+  border-radius: 12px;
+  box-shadow: none;
+  background: #f8fafc;
+}
+
+:deep(.el-input-group__append) {
+  cursor: pointer;
+}
+
+.code-text {
+  color: #2f6bff;
+  font-weight: 600;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #4f8cff 0%, #2f6bff 100%);
+  border: none;
+}
+
+@media (max-width: 900px) {
+  .login-layout {
+    flex-direction: column;
   }
-  .login-container{
-      display: flex;
-      align-items: center;
-      height: 100vh;
-    .card-header{
-      background-color:#f3e8ff;
-      img{
-          width: 430px;
-          
-      }
-    }
-    .jump-link{
-      text-align: right;
-      margin-bottom: 10px;
-    }
+
+  .login-banner {
+    width: 100%;
+    min-width: auto;
+    padding: 36px 24px;
+    position: relative;
+    overflow: hidden;
   }
+
+
+  .login-banner::after {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+  }
+
+  .login-panel {
+    padding: 24px 16px 40px;
+  }
+}
 </style>
