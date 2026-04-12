@@ -1,69 +1,44 @@
 <template>
-    <!-- 第一層 SubMenu -->
-    <!-- <el-sub-menu index="1">
-        <template #title>
-        <el-icon><Location /></el-icon>
-        <span>Navigator One</span>
-        </template>  -->
-
-        <!-- Gro     One -->
-        <!-- <el-menu-item-group title="Group One">
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-        </el-menu-item-group> -->
-
-        <!-- Group Two -->
-        <!-- <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-        </el-menu-item-group> -->
-
-        <!-- 第二層 SubMenu -->
-        <!-- <el-sub-menu index="1-4">
-        <template #title>item four</template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-        </el-sub-menu>
-    </el-sub-menu> -->
-
-    <!-- Menu Item 2 -->
-    <!-- <el-menu-item index="2">
-        <el-icon><Menu /></el-icon>
-        <span>Navigator Two</span>
-    </el-menu-item> -->
-
-    <!-- Menu Item 3 -->
-    <!-- <el-menu-item index="3" disabled>
-        <el-icon><Document /></el-icon>
-        <span>Navigator Three</span>
-    </el-menu-item> -->
-
-    <template v-for="(item, idx) in props.menuData" :key="item.name || idx">
+  <template v-for="(item, idx) in props.menuData" :key="item.name || idx">
     <!-- 沒有子菜單 -->
-    <el-menu-item   
-        @click="handleClick(item, getIndex(item))"
-        v-if="!item.children || item.children.length ==0"   
-        :index="getIndex(item)"
-        :key="getIndex(item)">
+    <el-menu-item
+      v-if="!item.children || item.children.length === 0"
+      :index="getIndex(item)"
+      class="menu-item"
+      @click="handleClick(item, getIndex(item))"
+    >
+      <el-icon size="18" class="menu-icon">
+        <component :is="item.meta.icon" />
+      </el-icon>
 
-        <el-icon size="20">
-             <component :is="item.meta.icon"></component>
-        </el-icon>
-             <span>{{zhCNtoTW(item.meta.name)}}</span> 
-            
-    </el-menu-item> 
+      <span v-if="!props.isCollapse" class="menu-text">
+        {{ zhCNtoTW(item.meta.name) }}
+      </span>
+    </el-menu-item>
 
     <!-- 有子菜單 -->
-    <el-sub-menu v-else :index="getIndex(item)">
-            <!-- #title是插槽用來識別這是標題,# 是 v-slot: 的簡寫 -->
-             <template #title>   
-                <el-icon size="20">
-                    <component :is="item.meta.icon"></component>
-                </el-icon>
-                <span>{{zhCNtoTW(item.meta.name)}}</span> 
-             </template>     
-        <tree-menu :index="getIndex(item)" 
-        :menuData="item.children.filter(c=>c.meta && c.meta.name)" />       
-    </el-sub-menu>           
-    </template>  
+    <el-sub-menu
+      v-else
+      :index="getIndex(item)"
+      class="sub-menu"
+    >
+      <template #title>
+        <el-icon size="18" class="menu-icon">
+          <component :is="item.meta.icon" />
+        </el-icon>
+
+        <span v-if="!props.isCollapse" class="menu-text">
+          {{ zhCNtoTW(item.meta.name) }}
+        </span>
+      </template>
+
+      <tree-menu
+        :index="getIndex(item)"
+        :menuData="item.children.filter(c => c.meta && c.meta.name)"
+        :isCollapse=false
+      />
+    </el-sub-menu>
+  </template>
 </template>
 
 <script>
@@ -78,7 +53,7 @@ import { useStore} from 'vuex';
 import { zhCNtoTW } from '@/utils/zhCNtoTW'
 
 // defineProps()是Vue 3的方式，用來讓子元件接收父元件傳進來的資料。
-const props= defineProps(['menuData','index'])
+const props= defineProps(['menuData','index','isCollapse'])
 
 // 生成唯一且為字串的索引，避免 Element Plus 事件校驗失敗
 const getIndex = (item) => {
@@ -93,7 +68,7 @@ const store = useStore()
 const handleClick=(item,active)=>{
     console.log('👆 點擊選單:', item.meta.name, '路由名稱:', item.name, '路徑:', item.meta.path)
     
-    //把數據傳遞進去
+    // 把頁面資訊存到 tab / menu 狀態中
     store.commit('addMenu',item.meta)
 
     store.commit('updateMenuActive', active)
@@ -101,14 +76,26 @@ const handleClick=(item,active)=>{
     // 優先使用路由名稱 (Name) 進行跳轉，這對動態路由最可靠
     if (item.name && router.hasRoute(item.name)) {
         router.push({ name: item.name })
-    } else {
+    } else if (item.meta?.path){
         // 退而求其次使用路徑
         router.push(item.meta.path)
     }
 }
 
 </script>
-
 <style scoped>
+.menu-item,
+.sub-menu :deep(.el-sub-menu__title) {
+  border-radius: 12px;
+}
 
+.menu-icon {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.menu-text {
+  font-size: 14px;
+  font-weight: 500;
+}
 </style>

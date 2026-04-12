@@ -1,85 +1,121 @@
 <template>
- <PaneHead />
-<el-table :data="tableData.list" style="width: 100%; margin-top: 16px">
-    <el-table-column prop="id" label="ID" />
-    <el-table-column prop="name" label="名稱" />
-    <el-table-column prop="permissions_id" label="所屬組別">
-        <template #default="scope">
-            {{permissionName (scope.row.permissions_id)}}
-        </template>
-    </el-table-column>
-    <el-table-column prop="mobile" label="手機號碼" />
+  <div class="admin-page">
+    <div class="admin-shell">
+      <div class="page-hero">
+        <div>
+          <div class="page-tag">Admin Management</div>
+          <h1 class="page-title">管理員管理</h1>
+          <p class="page-desc">查看管理員帳號、權限組別與狀態，並可直接編輯帳號資訊。</p>
+        </div>
+      </div>
 
-    <el-table-column prop="active" label="狀態">
-        <template #default="scope">
-           <el-tag :type="scope.row.active ? 'success' : 'danger' ">{{ scope.row.active ? '正常' : '失效'}}</el-tag>
-        </template>
-    </el-table-column>
-    
-    <el-table-column label="創建時間">
-        <template #default="scope">
-            <div class="flex-box">
-                <el-icon> <Clock/></el-icon>
-                <span style="margin-left:10px">{{ scope.row.create_time }}</span>
-            </div>
-        </template>
-    </el-table-column>
+      <div class="content-card">
+        <el-table :data="tableData.list" class="admin-table">
+          <el-table-column prop="id" label="ID" min-width="80" />
+          <el-table-column prop="name" label="名稱" min-width="120" />
 
-    <el-table-column label="操作">
-      <template #default="scope">
-        <el-button size="small" @click="open(scope.row)">編輯</el-button>
-      </template>
-    </el-table-column>
-</el-table>
-<el-pagination
-      v-model:current-page="paginationData.pageNum"
-      :page-size="paginationData.pageSize"
-      :background="false"
-      layout="total, prev, pager, next"
-      :total="tableData.total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange">
-</el-pagination>
-<el-dialog
-    v-model="dialogFormVisable"
-    :before-close="beforeClose"
-    title="添加權限"
-    width="500"
-  > 
-  <el-form
-      ref="formRef"
-      label-width="100px"
-      label-position="left"
-      :model="form"
-      :rules="rules"
+          <el-table-column prop="permissions_id" label="所屬組別" min-width="140">
+            <template #default="scope">
+              {{ permissionName(scope.row.permissions_id) }}
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="mobile" label="手機號碼" min-width="150" />
+
+          <el-table-column prop="active" label="狀態" min-width="100">
+            <template #default="scope">
+              <el-tag
+                class="status-tag"
+                :type="scope.row.active ? 'success' : 'danger'"
+              >
+                {{ scope.row.active ? '正常' : '失效' }}
+              </el-tag>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="建立時間" min-width="150">
+            <template #default="scope">
+              <div class="time-cell">
+                <el-icon><Clock /></el-icon>
+                <span>{{ scope.row.create_time }}</span>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="操作" min-width="120" fixed="right">
+            <template #default="scope">
+              <el-button class="edit-btn" size="small" @click="open(scope.row)">
+                編輯
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <div class="pagination-wrap">
+          <el-pagination
+            v-model:current-page="paginationData.pageNum"
+            :page-size="paginationData.pageSize"
+            :background="false"
+            layout="total, prev, pager, next"
+            :total="tableData.total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </div>
+    </div>
+
+    <el-dialog
+      v-model="dialogFormVisable"
+      :before-close="beforeClose"
+      title="編輯管理員資料"
+      width="520"
+      class="admin-dialog"
     >
-    <el-form-item label="手機號" prop="mobile">
-       <el-input v-model="form.mobile" disabled />
-    </el-form-item>
-    <el-form-item label="暱稱" prop="name">
-       <el-input v-model="form.name" />
-    </el-form-item>
-    <el-form-item label="菜單權限" prop="permissions_id">
-       <el-select
+      <el-form
+        ref="formRef"
+        label-width="100px"
+        label-position="left"
+        :model="form"
+        :rules="rules"
+        class="dialog-form"
+      >
+        <el-form-item label="手機號" prop="mobile">
+          <el-input v-model="form.mobile" disabled />
+        </el-form-item>
+
+        <el-form-item label="暱稱" prop="name">
+          <el-input v-model="form.name" />
+        </el-form-item>
+
+        <el-form-item label="菜單權限" prop="permissions_id">
+          <el-select
             v-model="form.permissions_id"
             placeholder="請選擇菜單權限"
-            style="width: 240px;"
-       >
-            <el-option 
-                v-for="item in options"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             />
-       </el-select>
-    </el-form-item>
-   </el-form>
-        <template #footer>
-            <div class="dialog-footer">
-                <el-button type="primary" @click="confirm">確認</el-button>
-            </div>
-        </template>
-  </el-dialog>
+          </el-select>
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button class="cancel-btn" @click="dialogFormVisable = false">
+            取消
+          </el-button>
+          <el-button type="primary" class="confirm-btn" @click="confirm">
+            確認儲存
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>
@@ -157,13 +193,12 @@ onMounted(()=>{
 })
 //請求列表
 const getListData=()=>{
-     authAdmin(paginationData).then((data)=>{
+     authAdmin(paginationData).then(({data})=>{
         console.log(data,'authAdmin')
-        console.log('原始 list:', data.data.data?.list)
-        //API 回傳有資料 → 用回傳的 list,PI 回傳沒有資料 → 用空陣列 []，避免後面 .forEach 爆炸
-        //因爲list的層級很深，來確保不會回傳undefined導致錯誤
-        const list = data.data.data?.list || []
-        const total = data.data.data?.total || 0
+        console.log('原始 list:', data.data?.list)
+
+        const list = data.data?.list || []
+        const total = data.data?.total || 0
         console.log('tableData.list:', tableData.list)
         list.forEach(item=>{
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD')
@@ -202,10 +237,209 @@ const handleCurrentChange=(val)=>{
 
 </script>
 <style lang="less" scoped>
-    .flex-box{
-        display: flex;
-        align-items:center ;
-    }
+.admin-page {
+  min-height: 100%;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(70, 120, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, #eef3f8 0%, #f4f7fb 100%);
+  box-sizing: border-box;
+}
 
+.admin-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+}
 
+.page-hero {
+  margin-bottom: 20px;
+  padding: 24px 28px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #1c4f92 0%, #163e74 100%);
+  box-shadow: 0 18px 40px rgba(22, 62, 116, 0.16);
+}
+
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.page-title {
+  margin: 0 0 10px;
+  font-size: 34px;
+  line-height: 1.2;
+  color: #fff;
+  font-weight: 800;
+}
+
+.page-desc {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.content-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 18px 48px rgba(31, 45, 61, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.admin-table {
+  margin-top: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  --el-table-border-color: #eef2f7;
+  --el-table-header-bg-color: #f8fbff;
+  --el-table-row-hover-bg-color: #f5f9ff;
+}
+
+:deep(.admin-table th.el-table__cell) {
+  color: #243247;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 0;
+}
+
+:deep(.admin-table td.el-table__cell) {
+  padding: 16px 0;
+  color: #425066;
+}
+
+:deep(.admin-table .el-table__inner-wrapper::before) {
+  display: none;
+}
+
+.time-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5b6678;
+}
+
+.status-tag {
+  border-radius: 999px;
+  padding: 0 10px;
+  font-weight: 700;
+}
+
+.edit-btn {
+  border-radius: 10px;
+  border: 1px solid #d6e4ff;
+  color: #2f6bff;
+  background: #eef4ff;
+  font-weight: 700;
+}
+
+.edit-btn:hover {
+  color: #fff;
+  border-color: #2f6bff;
+  background: #2f6bff;
+}
+
+.pagination-wrap {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+:deep(.el-pagination) {
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+:deep(.el-pagination .btn-prev),
+:deep(.el-pagination .btn-next),
+:deep(.el-pagination .el-pager li) {
+  border-radius: 10px;
+}
+
+:deep(.el-pagination .el-pager li.is-active) {
+  background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
+  color: #fff;
+}
+
+:deep(.admin-dialog .el-dialog) {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+:deep(.admin-dialog .el-dialog__header) {
+  margin-right: 0;
+  padding: 22px 24px 12px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+:deep(.admin-dialog .el-dialog__title) {
+  color: #223047;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+:deep(.admin-dialog .el-dialog__body) {
+  padding: 24px;
+}
+
+:deep(.dialog-form .el-input__wrapper),
+:deep(.dialog-form .el-select__wrapper) {
+  min-height: 42px;
+  border-radius: 12px;
+  box-shadow: none;
+  background: #f8fafc;
+}
+
+:deep(.dialog-form .el-input__wrapper.is-focus),
+:deep(.dialog-form .el-select__wrapper.is-focused) {
+  box-shadow: 0 0 0 3px rgba(79, 135, 255, 0.12);
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 100%;
+}
+
+.cancel-btn {
+  border-radius: 12px;
+  padding: 10px 18px;
+}
+
+.confirm-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
+}
+
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 16px;
+  }
+
+  .page-hero {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .content-card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+}
 </style>
