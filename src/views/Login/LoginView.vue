@@ -40,7 +40,7 @@
             <el-form-item prop="userName">
               <el-input
                 v-model="loginForm.userName"
-                placeholder="請輸入手機號"
+                placeholder="請輸入手機號碼"
                 size="large"
               />
             </el-form-item>
@@ -104,7 +104,7 @@ const loginForm=reactive({
 const validateUser=(rule,value,callback)=>{
   //不能為空
   if(value===''){
-    callback(new Error('請輸入帳號'))
+    callback(new Error('請輸入帳號或手機號碼'))
   }else{
      const phoneReg=/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/
      phoneReg.test(value) ? callback() : callback(new Error('手機號碼格式錯誤，請再檢查一次'))

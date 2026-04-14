@@ -9,7 +9,11 @@
       <el-col :span="10">
         <el-card class="user-card" shadow="never">
           <div class="user-info">
-            <el-avatar :size="64" :src="userInfo.avatar" class="avatar" />
+            <el-avatar 
+              :size="64" 
+              :src="getAvatar(userInfo.avatar)"
+              class="avatar"
+            />
             <div class="info-content">
               <span class="username">{{ userInfo.name || userInfo.userName }}</span>
             </div>
@@ -60,6 +64,7 @@
 import { ref, onMounted, reactive } from 'vue'
 import * as echarts from 'echarts'
 import { adminOrder } from '@/api'
+import user_image from '@/assets/user_image.jpg'
 
 const userInfo = JSON.parse(localStorage.getItem('pz_userInfo') || '{}')
 const chartRef = ref(null)
@@ -126,10 +131,25 @@ const initChart = () => {
   window.addEventListener('resize', () => myChart.resize())
 }
 
+
+//頭像優先使用 API 回傳資料，但考量部署環境的 HTTPS 限制，若為不安全的 HTTP 資源則自動退回預設頭像，確保頁面穩定顯示。
+const getAvatar = (avatar) => {
+  if (!avatar) return user_image
+  if (typeof avatar !== 'string') return user_image
+
+  // 👉 正式環境擋 http
+  if (import.meta.env.PROD && avatar.startsWith('http://')) {
+    return user_image
+  }
+
+  return avatar
+}
+
 onMounted(() => {
   getStats()
   initChart()
 })
+
 </script>
 
 <style lang="less" scoped>

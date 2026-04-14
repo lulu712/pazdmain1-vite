@@ -29,7 +29,7 @@
     <div class="header-right">
       <el-dropdown @command="handleClick">
         <div class="user-entry">
-          <el-avatar :src="userInfo.avatar" class="user-avatar" />
+          <el-avatar :src="getAvatar(userInfo.avatar)" class="user-avatar" />
           <div class="user-meta">
             <p class="user-role">Administrator</p>
             <p class="user-name">{{ userInfo.name }}</p>
@@ -54,6 +54,7 @@ import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus'
 import { zhCNtoTW } from '@/utils/zhCNtoTW'
+import user_image from '@/assets/user_image.jpg'
 
 
 //拿到store實例
@@ -114,6 +115,20 @@ const handleClick= (command) => {
 
     }
   
+}
+
+
+//頭像優先使用 API 回傳資料，但考量部署環境的 HTTPS 限制，若為不安全的 HTTP 資源則自動退回預設頭像，確保頁面穩定顯示。
+const getAvatar = (avatar) => {
+  if (!avatar) return user_image
+  if (typeof avatar !== 'string') return user_image
+
+  // 👉 正式環境擋 http
+  if (import.meta.env.PROD && avatar.startsWith('http://')) {
+    return user_image
+  }
+
+  return avatar
 }
 
 
