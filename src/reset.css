@@ -1,11 +1,14 @@
-/* 全域 box-sizing 設定 */
+/* =========================
+   Global Reset
+========================= */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* 移除預設 margin/padding */
+/* 移除大部分元素預設樣式 */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -27,77 +30,78 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* HTML5 區塊元素顯示為 block */
+/* HTML5 元素 */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-/* 設定行高 */
+/* 基本文字與背景 */
 body {
-  line-height: 1;
+  line-height: 1.5;
+  background-color: #fafafa;
+  color: #333;
+  font-family:
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    "PingFang TC",
+    sans-serif;
 }
 
-/* 移除列表樣式 */
+/* 清單 */
 ol, ul {
   list-style: none;
 }
 
-/* 清除引用樣式 */
+/* 引用 */
 blockquote, q {
   quotes: none;
 }
-blockquote::before, blockquote::after,
-q::before, q::after {
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
   content: '';
   content: none;
 }
 
-/* 表格樣式清除 */
+/* 表格 */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* 移除超連結下劃線 */
+/* 連結 */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* 移除按鈕預設樣式 */
+/* 表單元素 */
 button {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-/* 移除 input 的 outline */
-input, textarea, button, select {
+input,
+textarea,
+button,
+select {
   outline: none;
   font: inherit;
 }
 
-/* 讓圖片不超出容器 */
+/* 圖片 */
 img {
   max-width: 100%;
   display: block;
 }
 
-
-html, body, #app {
+/* 高度 */
+html,
+body,
+#app {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color:#fafafa;
-  
 }
-/* 讓導航欄預設的popup更改顏色 */
-.el-menu--popup .el-menu-item {
-  color: #333 !important;
-}
-
-.el-menu--popup .el-menu-item:hover {
-  background: #e6f0ff !important;
-}
-

@@ -1,6 +1,6 @@
 <template>
-  <div class="permission-page">
-    <div class="permission-shell">
+  <div class="page">
+    <div class="shell">
       <div class="page-hero">
         <div>
           <div class="page-tag">Permission Management</div>
@@ -231,67 +231,10 @@ const formatTreeData = (list) => {
 </script>
 
 <style scoped>
-.permission-page {
-  min-height: 100%;
-  padding: 24px;
-  background:
-    radial-gradient(circle at top left, rgba(70, 120, 255, 0.08), transparent 24%),
-    linear-gradient(180deg, #eef3f8 0%, #f4f7fb 100%);
-  box-sizing: border-box;
-}
-
-.permission-shell {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.page-hero {
-  margin-bottom: 20px;
-  padding: 24px 28px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #1c4f92 0%, #163e74 100%);
-  box-shadow: 0 18px 40px rgba(22, 62, 116, 0.16);
-}
-
-.page-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  margin-bottom: 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-}
-
-.page-title {
-  margin: 0 0 10px;
-  font-size: 34px;
-  line-height: 1.2;
-  color: #fff;
-  font-weight: 800;
-}
-
-.page-desc {
-  margin: 0;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.content-card {
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 22px;
-  padding: 22px;
-  box-shadow: 0 18px 48px rgba(31, 45, 61, 0.08);
-  backdrop-filter: blur(6px);
-}
-
 .toolbar {
   display: flex;
-  justify-content: flex-start;
-  margin: 10px 0 16px;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
 .add-btn {
@@ -306,25 +249,6 @@ const formatTreeData = (list) => {
 .permission-table {
   border-radius: 16px;
   overflow: hidden;
-  --el-table-border-color: #eef2f7;
-  --el-table-header-bg-color: #f8fbff;
-  --el-table-row-hover-bg-color: #f5f9ff;
-}
-
-:deep(.permission-table th.el-table__cell) {
-  color: #243247;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 14px 0;
-}
-
-:deep(.permission-table td.el-table__cell) {
-  padding: 16px 0;
-  color: #425066;
-}
-
-:deep(.permission-table .el-table__inner-wrapper::before) {
-  display: none;
 }
 
 .edit-btn {
@@ -339,61 +263,6 @@ const formatTreeData = (list) => {
   color: #fff;
   border-color: #2f6bff;
   background: #2f6bff;
-}
-
-.pagination-wrap {
-  margin-top: 22px;
-  display: flex;
-  justify-content: center;
-}
-
-:deep(.el-pagination) {
-  padding: 8px 14px;
-  border-radius: 14px;
-  background: #f8fbff;
-}
-
-:deep(.el-pagination .btn-prev),
-:deep(.el-pagination .btn-next),
-:deep(.el-pagination .el-pager li) {
-  border-radius: 10px;
-}
-
-:deep(.el-pagination .el-pager li.is-active) {
-  background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
-  color: #fff;
-}
-
-:deep(.permission-dialog .el-dialog) {
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-:deep(.permission-dialog .el-dialog__header) {
-  margin-right: 0;
-  padding: 22px 24px 12px;
-  border-bottom: 1px solid #eef2f6;
-}
-
-:deep(.permission-dialog .el-dialog__title) {
-  color: #223047;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-:deep(.permission-dialog .el-dialog__body) {
-  padding: 24px;
-}
-
-:deep(.dialog-form .el-input__wrapper) {
-  min-height: 42px;
-  border-radius: 12px;
-  box-shadow: none;
-  background: #f8fafc;
-}
-
-:deep(.dialog-form .el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 3px rgba(79, 135, 255, 0.12);
 }
 
 .tree-wrap {
@@ -416,45 +285,5 @@ const formatTreeData = (list) => {
 
 :deep(.permission-tree .el-tree-node__content:hover) {
   background: #eef4ff;
-}
-
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  width: 100%;
-}
-
-.cancel-btn {
-  border-radius: 12px;
-  padding: 10px 18px;
-}
-
-.confirm-btn {
-  border: none;
-  border-radius: 12px;
-  padding: 10px 20px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
-}
-
-@media (max-width: 768px) {
-  .permission-page {
-    padding: 16px;
-  }
-
-  .page-hero {
-    padding: 20px;
-    border-radius: 20px;
-  }
-
-  .page-title {
-    font-size: 28px;
-  }
-
-  .content-card {
-    padding: 16px;
-    border-radius: 18px;
-  }
 }
 </style>

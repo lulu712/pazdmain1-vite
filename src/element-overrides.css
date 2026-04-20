@@ -1,0 +1,97 @@
+/* =========================
+   Element Plus Overrides
+========================= */
+
+/* main layout */
+.el-main {
+  padding: 0 !important;
+  overflow-x: hidden;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* menu popup */
+.el-menu--popup .el-menu-item {
+  color: #333 !important;
+}
+
+.el-menu--popup .el-menu-item:hover {
+  background: #e6f0ff !important;
+}
+
+/* pagination */
+.el-pagination {
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+.el-pagination .btn-prev,
+.el-pagination .btn-next,
+.el-pagination .el-pager li {
+  border-radius: 10px;
+}
+
+.el-pagination .el-pager li.is-active {
+  background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
+  color: #fff;
+}
+
+/* table */
+.el-table {
+  --el-table-border-color: #eef2f7;
+  --el-table-header-bg-color: #f8fbff;
+  --el-table-row-hover-bg-color: #f5f9ff;
+}
+
+.el-table th.el-table__cell {
+  color: #243247;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 0;
+}
+
+.el-table td.el-table__cell {
+  padding: 16px 0;
+  color: #425066;
+}
+
+.el-table .el-table__inner-wrapper::before {
+  display: none;
+}
+
+/* dialog */
+.el-dialog {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.el-dialog__header {
+  margin-right: 0;
+  padding: 22px 24px 12px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.el-dialog__title {
+  color: #223047;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.el-dialog__body {
+  padding: 24px;
+}
+
+/* input / select */
+.el-input__wrapper,
+.el-select__wrapper {
+  min-height: 42px;
+  border-radius: 12px;
+  box-shadow: none;
+  background: #f8fafc;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 3px rgba(79, 135, 255, 0.12);
+}

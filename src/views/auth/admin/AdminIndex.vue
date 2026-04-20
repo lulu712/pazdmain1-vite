@@ -1,6 +1,6 @@
 <template>
-  <div class="admin-page">
-    <div class="admin-shell">
+  <div class="page">
+    <div class="shell">
       <div class="page-hero">
         <div>
           <div class="page-tag">Admin Management</div>
@@ -237,86 +237,10 @@ const handleCurrentChange=(val)=>{
 
 </script>
 <style lang="less" scoped>
-.admin-page {
-  min-height: 100%;
-  padding: 24px;
-  background:
-    radial-gradient(circle at top left, rgba(70, 120, 255, 0.08), transparent 24%),
-    linear-gradient(180deg, #eef3f8 0%, #f4f7fb 100%);
-  box-sizing: border-box;
-}
-
-.admin-shell {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.page-hero {
-  margin-bottom: 20px;
-  padding: 24px 28px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #1c4f92 0%, #163e74 100%);
-  box-shadow: 0 18px 40px rgba(22, 62, 116, 0.16);
-}
-
-.page-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  margin-bottom: 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-}
-
-.page-title {
-  margin: 0 0 10px;
-  font-size: 34px;
-  line-height: 1.2;
-  color: #fff;
-  font-weight: 800;
-}
-
-.page-desc {
-  margin: 0;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.content-card {
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 22px;
-  padding: 22px;
-  box-shadow: 0 18px 48px rgba(31, 45, 61, 0.08);
-  backdrop-filter: blur(6px);
-}
-
-.admin-table {
+  .admin-table {
   margin-top: 14px;
   border-radius: 16px;
   overflow: hidden;
-  --el-table-border-color: #eef2f7;
-  --el-table-header-bg-color: #f8fbff;
-  --el-table-row-hover-bg-color: #f5f9ff;
-}
-
-:deep(.admin-table th.el-table__cell) {
-  color: #243247;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 14px 0;
-}
-
-:deep(.admin-table td.el-table__cell) {
-  padding: 16px 0;
-  color: #425066;
-}
-
-:deep(.admin-table .el-table__inner-wrapper::before) {
-  display: none;
 }
 
 .time-cell {
@@ -346,63 +270,6 @@ const handleCurrentChange=(val)=>{
   background: #2f6bff;
 }
 
-.pagination-wrap {
-  margin-top: 22px;
-  display: flex;
-  justify-content: center;
-}
-
-:deep(.el-pagination) {
-  padding: 8px 14px;
-  border-radius: 14px;
-  background: #f8fbff;
-}
-
-:deep(.el-pagination .btn-prev),
-:deep(.el-pagination .btn-next),
-:deep(.el-pagination .el-pager li) {
-  border-radius: 10px;
-}
-
-:deep(.el-pagination .el-pager li.is-active) {
-  background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
-  color: #fff;
-}
-
-:deep(.admin-dialog .el-dialog) {
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-:deep(.admin-dialog .el-dialog__header) {
-  margin-right: 0;
-  padding: 22px 24px 12px;
-  border-bottom: 1px solid #eef2f6;
-}
-
-:deep(.admin-dialog .el-dialog__title) {
-  color: #223047;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-:deep(.admin-dialog .el-dialog__body) {
-  padding: 24px;
-}
-
-:deep(.dialog-form .el-input__wrapper),
-:deep(.dialog-form .el-select__wrapper) {
-  min-height: 42px;
-  border-radius: 12px;
-  box-shadow: none;
-  background: #f8fafc;
-}
-
-:deep(.dialog-form .el-input__wrapper.is-focus),
-:deep(.dialog-form .el-select__wrapper.is-focused) {
-  box-shadow: 0 0 0 3px rgba(79, 135, 255, 0.12);
-}
-
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
@@ -423,23 +290,4 @@ const handleCurrentChange=(val)=>{
   background: linear-gradient(90deg, #5f97ff 0%, #356eff 100%);
 }
 
-@media (max-width: 768px) {
-  .admin-page {
-    padding: 16px;
-  }
-
-  .page-hero {
-    padding: 20px;
-    border-radius: 20px;
-  }
-
-  .page-title {
-    font-size: 28px;
-  }
-
-  .content-card {
-    padding: 16px;
-    border-radius: 18px;
-  }
-}
 </style>
